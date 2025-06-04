@@ -107,7 +107,7 @@ Issues and pull requests are welcome! If Clio helps you or your project, let me 
 
 ## About the Name
 
-In Greek mythology, **Clio** is the muse of history and heroic deeds.
+In Greek mythology, **Clio** is the muse of history and heroic deeds. As a nod to her character, this project was named Clio for their shared duty of registering the history of their world.
 
 ---
 
