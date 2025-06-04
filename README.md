@@ -32,7 +32,7 @@ That’s it. No builds, no external dependencies.
 ### Basic Usage
 
 ```cpp
-#include "clio/clio.hpp"
+#include "Clio/clio.hpp"
 
 int main() {
     CLIO_INFO("You can log simple messages like this!");
