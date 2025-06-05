@@ -1,9 +1,11 @@
 #pragma once
 
 #include <iostream>
+#include <iomanip>
 #include <mutex>
 #include <sstream>
 #include <string>
+#include <chrono>
 
 namespace Clio {
 
@@ -40,6 +42,20 @@ namespace Clio {
             }
         }
 
+        inline const std::string getCurrentTimestamp() const {
+            auto now = std::chrono::system_clock::now();
+            auto in_time_t = std::chrono::system_clock::to_time_t(now);
+
+            std::ostringstream oss;
+            oss << std::put_time(std::localtime(&in_time_t), "%Y-%m-%d %H:%M:%S");
+
+            auto ms = std::chrono::duration_cast<std::chrono::milliseconds>(now.time_since_epoch()) % 1000;
+
+            oss << "." << std::setfill('0') << std::setw(3) << ms.count();
+
+            return oss.str();
+        } 
+
     public:
         static Logger& get() {
             static Logger instance;
@@ -54,7 +70,8 @@ namespace Clio {
             std::ostringstream oss;
             (oss << ... << args);
 
-            std::cout << "[" << severityToString(severity) << "] "
+            std::cout << "[" << getCurrentTimestamp() << "] "
+                << "[" << severityToString(severity) << "] "
                 << "[" << file << ":" << line << "] "
                 << oss.str() << "\n";
         }
