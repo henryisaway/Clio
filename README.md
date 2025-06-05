@@ -35,6 +35,9 @@ That’s it. No builds, no external dependencies.
 #include "Clio/clio.hpp"
 
 int main() {
+
+    Clio::Logger.get().setSeverityThreshold(Clio::Severity::INFO);
+
     CLIO_INFO("You can log simple messages like this!");
 
     const int x = 5;
