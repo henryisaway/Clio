@@ -16,6 +16,7 @@ namespace Clio {
     the output displays the message a different colour.
     */
     enum class Severity {
+        UNSET = -1,
         INFO,
         WARN,
         ERROR,
@@ -29,8 +30,11 @@ namespace Clio {
     class Logger {
     private:
         std::mutex mtx;
+        Severity m_severityThreshold;
 
-        Logger() = default;
+        Logger(){
+            m_severityThreshold = Severity::UNSET;
+        }
 
         inline const char* severityToString(Severity severity) const {
             switch(severity) {
@@ -56,24 +60,39 @@ namespace Clio {
             return oss.str();
         } 
 
+        inline const bool shouldLog(Severity severity) const {
+            return static_cast<int>(severity) >= static_cast<int>(m_severityThreshold);
+        }
+
     public:
         static Logger& get() {
             static Logger instance;
             return instance;
         }
 
+        inline void setSeverityThreshold(Severity severity){
+            m_severityThreshold = severity;
+        }
+
         // Template needed to handle different string types
         template<typename... Args>
         inline void log(Severity severity, const char* file, const int line, const Args&... args) {
-            std::lock_guard<std::mutex> lock(mtx);      // Basic thread-safety
+            if(m_severityThreshold == Severity::UNSET){
+                throw std::logic_error("Severity threshold was not set. Run Clio::Logger.get().setSeverity( Clio::Severity::<Severity> ) to configure the logger before usage.");
+                return;
+            }
 
-            std::ostringstream oss;
-            (oss << ... << args);
+            if(shouldLog(severity)){
+                std::lock_guard<std::mutex> lock(mtx);      // Basic thread-safety
 
-            std::cout << "[" << getCurrentTimestamp() << "] "
-                << "[" << severityToString(severity) << "] "
-                << "[" << file << ":" << line << "] "
-                << oss.str() << "\n";
+                std::ostringstream oss;
+                (oss << ... << args);
+
+                std::cout << "[" << getCurrentTimestamp() << "] "
+                    << "[" << severityToString(severity) << "] "
+                    << "[" << file << ":" << line << "] "
+                    << oss.str() << "\n";
+            }
         }
     };
 }
