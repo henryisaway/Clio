@@ -78,7 +78,7 @@ namespace Clio {
         template<typename... Args>
         inline void log(Severity severity, const char* file, const int line, const Args&... args) {
             if(m_severityThreshold == Severity::UNSET){
-                throw std::logic_error("Severity threshold was not set. Run Clio::Logger.get().setSeverity( Clio::Severity::<Severity> ) to configure the logger before usage.");
+                throw std::logic_error("Log severity threshold was not set. Run Clio::Logger.get().setSeverity( Clio::Severity::<Severity> ) to configure the logger before usage.");
                 return;
             }
 
