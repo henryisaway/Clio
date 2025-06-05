@@ -17,6 +17,8 @@ namespace Clio {
     */
     enum class Severity {
         UNSET = -1,
+        TRACE,
+        DEBUG,
         INFO,
         WARN,
         ERROR,
@@ -38,6 +40,8 @@ namespace Clio {
 
         inline const char* severityToString(Severity severity) const {
             switch(severity) {
+            case Severity::TRACE: return "TRACE";
+            case Severity::DEBUG: return "DEBUG";
             case Severity::INFO: return "INFO";
             case Severity::WARN: return "WARN";
             case Severity::ERROR: return "ERROR";
@@ -98,6 +102,8 @@ namespace Clio {
 }
 
 // --- Macro definitions ---
+#define CLIO_TRACE(...) Clio::Logger::get().log(Clio::Severity::TRACE, __FILE__, __LINE__, __VA_ARGS__)
+#define CLIO_DEBUG(...) Clio::Logger::get().log(Clio::Severity::DEBUG, __FILE__, __LINE__, __VA_ARGS__)
 #define CLIO_INFO(...) Clio::Logger::get().log(Clio::Severity::INFO, __FILE__, __LINE__, __VA_ARGS__)
 #define CLIO_WARN(...) Clio::Logger::get().log(Clio::Severity::WARN, __FILE__, __LINE__, __VA_ARGS__)
 #define CLIO_ERROR(...) Clio::Logger::get().log(Clio::Severity::ERROR, __FILE__, __LINE__, __VA_ARGS__)
