@@ -1,16 +1,15 @@
 
 # Clio
 
-**Clio** is a simple, lightweight, and thread-safe header-only C++ logging library.  
+**Clio** is a simple, lightweight, and thread-safe header-only C++ logging library.
 🚧 **Work In Progress**
 
 ## Features
 
-- ✅ **Header-only** — Just include and go. No builds, no dependencies.
-- ✅ **Thread-safe** — Safe for concurrent logging in multi-threaded environments.
-- ✅ **Configurable verbosity** — Fine-grained control over log levels.
-- ✅ **Lightweight** — Minimal footprint; designed for high-performance applications.
-- ✅ **Customizable output** — Redirect logs to files, streams, or custom sinks (Coming soon).
+- **Header-only** — No builds or dependencies are necessary.
+- **Thread-safe** — Safe for concurrent logging in multi-threaded environments.
+- **Configurable verbosity** — Fine-grained control over log levels.
+- **Customizable output** — Redirect logs to files, streams, or custom sinks (Coming soon).
 
 ---
 
@@ -18,14 +17,12 @@
 
 ### Installation
 
-1. Copy the `Clio/` directory into your project.
+1. Add the `Clio` repository into your project via `git submodule add https://github.com/henryisaway/Clio.git [destination directory]` (recommended).
 2. Include the main header:
 
 ```cpp
 #include "Clio/clio.hpp"
 ````
-
-That’s it. No builds, no external dependencies.
 
 ---
 
@@ -67,6 +64,8 @@ Clio uses std::mutex internally to ensure all log operations are safe across mul
 
 | Level   | Description                                                      |
 | ------- | ---------------------------------------------------------------- |
+| `trace` | Fine-grained tracking of every operation being executed          |
+| `debug` | Useful information for when debugging your program               |
 | `info`  | Informational messages                                           |
 | `warn`  | Warnings about potential issues                                  |
 | `error` | Errors that occurred but do not necessarily stop the application |
@@ -80,19 +79,10 @@ Planned: Clio will support pluggable sinks for writing logs to files, streams, o
 
 ---
 
-## Why Clio?
-
-* ✨ **Minimalist** — No fluff, just logging.
-* 🏎️ **Fast** — Zero-cost abstractions wherever possible.
-* 🛠️ **Portable** — Works anywhere C++17 is available.
-* 🧵 **Thread-safe** — No more log mangling in multi-threaded code.
-
----
-
 ## Requirements
 
 * C++17 or later
-* Standard library (no third-party dependencies)
+* Standard library
 
 ---
 
