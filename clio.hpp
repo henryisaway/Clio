@@ -12,8 +12,7 @@ namespace Clio {
     // --- Importance level ---
     /*
     Used only to organise the level of importance of a log message.
-    Doesn't actually change anything in the implementation itself, only
-    the output displays the message a different colour.
+    Used in severity filtering and log tagging.
     */
     enum class Severity {
         UNSET = -1,
@@ -64,7 +63,7 @@ namespace Clio {
             return oss.str();
         } 
 
-        inline const bool shouldLog(Severity severity) const {
+        inline bool shouldLog(Severity severity) const {
             return static_cast<int>(severity) >= static_cast<int>(m_severityThreshold);
         }
 
